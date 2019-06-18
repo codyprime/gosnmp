@@ -268,7 +268,9 @@ func (x *GoSNMP) connect(networkSuffix string) error {
 func (x *GoSNMP) netConnect() error {
 	var err error
 	addr := net.JoinHostPort(x.Target, strconv.Itoa(int(x.Port)))
-	x.Conn, err = net.DialTimeout(x.Transport, addr, x.Timeout)
+	if x.Conn == nil {
+		x.Conn, err = net.DialTimeout(x.Transport, addr, x.Timeout)
+	}
 	return err
 }
 
